@@ -3,13 +3,14 @@
     <div class="card-stack">
        
         <img [ngStyle]="{'right.px': i * 5}" *ngFor="let c of [0,1,2,3]; let i = index;" 
-        src="/assets/cards/card_cover.png">
+        src="/assets/cards-new/card_cover.png">
 
         <img (click)="takeCard()" class="top-card" 
-        style="right: 25px" src="/assets/cards/card_cover.png">
+        style="right: 25px" src="/assets/cards-new/card_cover.png">
+        <!-- /assets/cards-new/card_cover.png -->
 
         <img (click)="takeCard()" *ngIf="pickCardAnimation" class="pick-card" 
-        style="right: 25px" src="/assets/cards/ace_1.png">
+        style="right: 25px" src="/assets/cards-new/{{ currentCard }}.png">
 
     </div>
 

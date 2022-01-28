@@ -8,8 +8,9 @@ import { Game } from 'src/models/game';
 })
 export class GameComponent implements OnInit {
   pickCardAnimation = false;
-  game: Game | undefined;
- 
+  currentCard: string | undefined;
+  game: Game = new Game;
+
 
   constructor() { }
 
@@ -17,13 +18,22 @@ export class GameComponent implements OnInit {
     this.newGame();
   }
 
-  newGame(){
+  newGame() {
     this.game = new Game();
     console.log(this.game);
   }
 
-  takeCard(){
-    this.pickCardAnimation = true;
+  takeCard() {
+    if (!this.pickCardAnimation) {
+      this.currentCard = this.game.stack.pop(); //pop () method removes the last element from an array and returns that element.
+      console.log(this.currentCard);
+      this.pickCardAnimation = true;
+      this.game.playedCards.push(this.currentCard);
+      setTimeout(() => {
+        this.pickCardAnimation = false;
+
+      }, 1500);
+    }
   }
 
 }
