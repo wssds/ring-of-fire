@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Game } from 'src/models/game';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 
 
@@ -23,7 +23,7 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-   
+
   }
 
   takeCard() {
@@ -31,8 +31,10 @@ export class GameComponent implements OnInit {
       this.currentCard = this.game.stack.pop(); //pop () method removes the last element from an array and returns that element.
       this.pickCardAnimation = true;
       console.log('New card: ' + this.currentCard);
-      console.log('Game is',this.game);
+      console.log('Game is', this.game);
 
+      this.game.currentPlayer++;
+      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
       setTimeout(() => {
         this.game.playedCards.push(this.currentCard);
         this.pickCardAnimation = false;
@@ -45,7 +47,9 @@ export class GameComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
     dialogRef.afterClosed().subscribe(name => {
-      this.game.players.push(name);
+      if (name && name.length > 0) {
+        this.game.players.push(name);
+      }
     });
   }
 }
