@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
-import { Firestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 
 
 
@@ -17,22 +18,24 @@ export class GameComponent implements OnInit {
   game!: Game;
 
 
-  constructor(private Angularfirestore: Firestore ,public dialog: MatDialog) { }
+  constructor(private firestore: AngularFirestore ,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.newGame();
-    // this
-    // .firestore
-    // .collection('items')
-    // .valueChanges();
-    // .subscribe((game: any) => {
-    //   console.log('Game update', game);
-    // });
+    this
+    .firestore
+    .collection('games')
+    .valueChanges()
+    .subscribe((game: any) => {
+      console.log('Game update', game);
+    });
   }
 
   newGame() {
     this.game = new Game();
-
+    this.firestore
+    .collection('games')
+    .add({'Hallo': 'Welt'});
   }
 
   takeCard() {
