@@ -39,7 +39,7 @@ export class GameComponent implements OnInit {
           this.game.pickCardAnimation = game.pickCardAnimation;
           this.game.currentCard = game.currentCard;
 
-      });
+        });
 
     });
   }
@@ -56,16 +56,15 @@ export class GameComponent implements OnInit {
         this.game.pickCardAnimation = true;
         console.log('New card: ' + this.game.currentCard);
         console.log('Game is', this.game);
-        this.saveGame();
-
         this.game.currentPlayer++;
         this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+
+        this.saveGame();
         setTimeout(() => {
           this.game.playedCards.push(this.game.currentCard);
-          
+
           this.game.pickCardAnimation = false;
           this.saveGame();
-
         }, 1000);
       }
     }
@@ -82,11 +81,11 @@ export class GameComponent implements OnInit {
     });
   }
 
-  saveGame(){
+  saveGame() {
     this
-    .firestore
-    .collection('games')
-    .doc(this.gameId)
-    .update(this.game.toJson());
+      .firestore
+      .collection('games')
+      .doc(this.gameId)
+      .update(this.game.toJson());
   }
 }
